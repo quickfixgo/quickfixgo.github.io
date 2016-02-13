@@ -4,6 +4,5 @@ title: Docs
 permalink: /docs/
 ---
 
-### Getting Started
-
+* [GoDocs](https://godoc.org/github.com/quickfixgo/quickfix)
 * [Configuration]({{ site.baseurl }}/docs/configuration.html)
