@@ -1,11 +1,24 @@
 <nav class="navbar navbar-default">
   <div class="container-fluid">
-    <a class="navbar-brand" href="{{ site.baseurl }}/">{{ site.title }}</a>
-    <ul class="nav navbar-nav">
-      <li role="presentation"><a href="{{ site.baseurl}}/about">About</a></li>
-      <li role="presentation"><a href="https://godoc.org/github.com/quickfixgo/quickfix">Docs</a></li>
-      <li role="presentation"><a href="https://github.com/quickfixgo/examples">Examples</a></li>
-      <li role="presentation"><a href="http://github.com/quickfixgo/quickfix">Contribute</a></li>
-    </ul>
-  </div>
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="{{ site.baseurl }}/">{{ site.title }}</a>
+    </div>
+
+    <div class="collapse navbar-collapse" id="navbar-collapse-1">
+
+      <ul class="nav navbar-nav navbar-left">
+        <li role="presentation"><a href="{{ site.baseurl}}/about.html">About</a></li>
+        <li role="presentation"><a href="https://godoc.org/github.com/quickfixgo/quickfix">Docs</a></li>
+        <li role="presentation"><a href="https://github.com/quickfixgo/examples">Examples</a></li>
+        <li role="presentation"><a href="http://github.com/quickfixgo/quickfix">Contribute</a></li>
+      </ul>
+
+    </div> <!-- ./navbar-collapse -->
+  </div> <!-- /.container-fluid -->
 </nav>
