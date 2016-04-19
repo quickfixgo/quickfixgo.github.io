@@ -9,7 +9,7 @@
 title: QuickFIXGo
 description: FIX Protocol Library Implemented in Go
 baseurl: "" # the subpath of your site, e.g. /blog
-url: "http://yourdomain.com" # the base hostname & protocol for your site
+url: "http://quickfixgo.org" # the base hostname & protocol for your site
 github_username:  quickfixgo
 
 # Build settings
