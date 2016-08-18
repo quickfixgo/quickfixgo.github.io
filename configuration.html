@@ -4,55 +4,24 @@ layout: default
 
 <h2>QuickFIX/Go Configuration</h2>
 
-<h3>Sample Settings File</h3>
+<p>A QuickFIX/Go acceptor or initiator can maintain multiple FIX sessions. A FIX session is defined in QuickFIX/Go as a unique combination of a <strong>BeginString</strong> (the FIX version number), a <strong>SenderCompID</strong> (your ID), and a <strong>TargetCompID</strong> (the ID of your counterparty). A <strong>SessionQualifier</strong> can also be use to disambiguate otherwise identical sessions.</p>
 
-<pre>
-# default settings for sessions
-[DEFAULT]
-ReconnectInterval=60
-SenderCompID=TW
+<p>The <code>Settings</code> type has the ability to parse settings out of any <code>io.Reader</code> such as a file. If you decide to write your own components (storage for a particular database, a new kind of connection, etc.), you can programatically configure QuickFIX/Go using the methods of a <code>Settings</code> instance.
 
-# session definition
-[SESSION]
-# inherit ReconnectInterval and SenderCompID from default
-BeginString=FIX.4.1
-TargetCompID=ARCA
-StartTime=12:30:00
-EndTime=23:30:00
-HeartBtInt=20
-SocketConnectPort=9823
-SocketConnectHost=123.123.123.123
-DataDictionary=somewhere/FIX41.xml
-
-[SESSION]
-BeginString=FIX.4.0
-TargetCompID=ISLD
-StartTime=12:00:00
-EndTime=23:00:00
-HeartBtInt=30
-SocketConnectPort=8323
-SocketConnectHost=23.23.23.23
-DataDictionary=somewhere/FIX40.xml
-
-[SESSION]
-BeginString=FIX.4.2
-TargetCompID=INCA
-StartTime=12:30:00
-EndTime=21:30:00
-# overide default setting for RecconnectInterval
-ReconnectInterval=30
-HeartBtInt=30
-SocketConnectPort=6523
-SocketConnectHost=3.3.3.3
-# (optional) alternate connection ports and hosts to cycle through on failover
-SocketConnectPort1=8392
-SocketConnectHost1=8.8.8.8
-SocketConnectPort2=2932
-SocketConnectHost2=12.12.12.12
-DataDictionary=somewhere/FIX42.xml
-</pre>
+<p>A settings file is set up with two types of headings, a <strong>[DEFAULT]</strong> and a <strong>[SESSION]</strong> heading. <strong>[SESSION]</strong> tells QuickFIX/Go that a new Session is being defined. <strong>[DEFAULT]</strong> is a where you can define settings that all sessions use by default. If you do not provide a setting that QuickFIX/Go needs, calling Start on a configured Acceptor or Initiator will return an error telling you what setting is missing or improperly formatted.</p>
 
 <h3>QuickFIX/Go Settings</h3>
+
+<ul>
+  <li><a href='#Session'>Session</a>
+  <li><a href='#Validation'>Validation</a>
+  <li><a href='#Initiator'>Initiator</a>
+  <li><a href='#Acceptor'>Acceptor</a>
+  <li><a href='#Secure Communication'>Secure Communication</a>
+  <li><a href='#Storage'>Storage</a>
+  <li><a href='#Logging'>Logging</a>
+  <li><a href='#Sample Settings File'>Sample Settings File</a>
+</ul>
 
 <table class="table table-bordered table-condensed table-hover table-responsive">
   <thead>
@@ -64,7 +33,7 @@ DataDictionary=somewhere/FIX42.xml
     </tr>
   </thead>
   <tbody>
-    <tr class='info'><th colspan='4' class='text-center'>Session</th></tr>
+    <tr class='info'><th colspan='4' class='text-center'><a name='Session'></a>Session</th></tr>
     <tr>
       <th>BeginString</th>
       <td>Version of FIX this session should use</td>
@@ -191,7 +160,7 @@ DataDictionary=somewhere/FIX42.xml
       </td>
       <td>N</td>
     </tr>
-    <tr class='info'><th colspan='4' class='text-center'>Validation</th></tr>
+    <tr class='info'><th colspan='4' class='text-center'><a name='Validation'></a>Validation</th></tr>
     <tr>
       <th>DataDictionary</th>
       <td>
@@ -262,7 +231,7 @@ AppDataDictionary.FIX.4.4=FIX44.xml
       </td>
       <td>Y</td>
     </tr>
-    <tr class='info'><th colspan='4' class='text-center'>Initiator</th></tr>
+    <tr class='info'><th colspan='4' class='text-center'><a name='Initiator'></a>Initiator</th></tr>
     <tr>
       <th>ReconnectInterval</th>
       <td>Time between reconnection attempts in seconds. Only used for initiators.</td>
@@ -299,7 +268,7 @@ AppDataDictionary.FIX.4.4=FIX44.xml
       <td>Value must be a valid IPv4 or IPv6 address or a domain name</td>
       <td/>
     </tr>
-    <tr class='info'><th colspan='4' class='text-center'>Acceptor</th></tr>
+    <tr class='info'><th colspan='4' class='text-center'><a name='Acceptor'></a>Acceptor</th></tr>
     <tr>
       <th>SocketAcceptHost</th>
       <td>Socket host address for listening on incoming connections, only used for acceptors.</td>
@@ -312,7 +281,7 @@ AppDataDictionary.FIX.4.4=FIX44.xml
       <td>Value must be a positive integer, valid open socket port.</td>
       <td/>
     </tr>
-    <tr class='info'><th colspan='4' class='text-center'>Secure Communication</th></tr>
+    <tr class='info'><th colspan='4' class='text-center'><a name='Secure Communication'></a>Secure Communication</th></tr>
     <tr>
       <th>SocketPrivateKeyFile</th>
       <td>Private key to use for secure TLS connections. Must be used with SocketCertificateFile.</td>
@@ -331,7 +300,7 @@ AppDataDictionary.FIX.4.4=FIX44.xml
       <td>File Path</td>
       <td/>
     </tr>
-    <tr class='info'><th colspan='4' class='text-center'>Storage</th></tr>
+    <tr class='info'><th colspan='4' class='text-center'><a name='Storage'></a>Storage</th></tr>
     <tr>
       <th>FileStorePath</th>
       <td>Directory to store sequence number and message files. Only used with FileStoreFactory.</td>
@@ -366,7 +335,7 @@ SQLConnMaxLifetime=2h45m  # 2 hours and 45 minutes
       </td>
       <td/>
     </tr>
-    <tr class='info'><th colspan='4' class='text-center'>Logging</th></tr>
+    <tr class='info'><th colspan='4' class='text-center'><a name='Logging'></a>Logging</th></tr>
     <tr>
       <th>FileLogPath</th>
       <td>Directory to store logs.</td>
@@ -375,3 +344,51 @@ SQLConnMaxLifetime=2h45m  # 2 hours and 45 minutes
     </tr>
   </tbody>
 </table>
+
+<h3><a name='Sample Settings File'></a>Sample Settings File</h3>
+
+<pre>
+# default settings for sessions
+[DEFAULT]
+ReconnectInterval=60
+SenderCompID=TW
+
+# session definition
+[SESSION]
+# inherit ReconnectInterval and SenderCompID from default
+BeginString=FIX.4.1
+TargetCompID=ARCA
+StartTime=12:30:00
+EndTime=23:30:00
+HeartBtInt=20
+SocketConnectPort=9823
+SocketConnectHost=123.123.123.123
+DataDictionary=somewhere/FIX41.xml
+
+[SESSION]
+BeginString=FIX.4.0
+TargetCompID=ISLD
+StartTime=12:00:00
+EndTime=23:00:00
+HeartBtInt=30
+SocketConnectPort=8323
+SocketConnectHost=23.23.23.23
+DataDictionary=somewhere/FIX40.xml
+
+[SESSION]
+BeginString=FIX.4.2
+TargetCompID=INCA
+StartTime=12:30:00
+EndTime=21:30:00
+# overide default setting for RecconnectInterval
+ReconnectInterval=30
+HeartBtInt=30
+SocketConnectPort=6523
+SocketConnectHost=3.3.3.3
+# (optional) alternate connection ports and hosts to cycle through on failover
+SocketConnectPort1=8392
+SocketConnectHost1=8.8.8.8
+SocketConnectPort2=2932
+SocketConnectHost2=12.12.12.12
+DataDictionary=somewhere/FIX42.xml
+</pre>
