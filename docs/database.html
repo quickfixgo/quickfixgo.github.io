@@ -1,0 +1,7 @@
+---
+layout: default
+---
+
+<h3>Generating QuickFIX/Go Databases</h3>
+
+<p>Everything needed to generate your database is in the <code>_sql</code> directory. For MySQL, there are the script and batch files <code>create.sh</code> and <code>create.bat</code>. These scripts will work on a newly installed MySQL database with default permisions. The scripts will try to generate the database using the root MySQL account with no password. If you need to use a different account or need a password, you will have to edit the script. To select a different user, simply change 'root' to another user. To add a password, use pass the <code>-p</code> option after the username. Similar scripts are provided for MSSQL, PostgreSQL and Oracle.</p>

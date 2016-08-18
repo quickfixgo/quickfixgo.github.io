@@ -1,0 +1,72 @@
+---
+layout: default
+---
+
+<h3>Receiving Messages</h3>
+
+<p>Most of the messages you will be interested in looking at will be arriving in your <code>FromApp</code> function of your application. All messages have a header and trailer. If you want to get Header or Trailer fields, you must access those fields from the Header or Trailer embedded Struct. All other fields are accessible in the Body embedded struct.</p>
+
+<p>QuickFIX/Go has a type for all messages and fields defined in the standard spec. The easiest and most typesafe method of receiving messages is by using the QuickFIX/Go <code>MessageRouter</code> generated message types. Any messages you do not establish routes for will by default return an <code>UnsupportedMessageType</code> reject.</p>
+
+<pre><code>
+import (
+  "github.com/quickfixgo/quickfix"
+  "github.com/quickfixgo/quickfix/field"
+  "github.com/quickfixgo/quickfix/fix41/newordersingle"
+)
+
+type MyApplication struct {
+  *quickfix.MessageRouter
+}
+
+func (m *MyApplication) init() {
+  m.MessageRouter=quickfix.NewMessageRouter()
+  m.AddRoute(newordersingle.Route(m.onNewOrderSingle))
+}
+
+func (m *MyApplication) FromApp(msg quickfix.Message, sessionID quickfix.SessionID) (err quickfix.MessageRejectError) {
+  return m.Route(msg, sessionID)
+}
+
+func (m *MyApplication) onNewOrderSingle(msg newordersingle.NewOrderSingle, sessionID quickfix.SessionID) (err quickfix.MessageRejectError) {
+  var clOrdID field.ClOrdIDField
+  if clOrdID, err = msg.GetClOrdID(); err!=nil {
+    return
+  }
+
+  //compile time error!! field not defined in FIX41
+  var clearingAccount field.ClearingAccountField
+  clearingAccount, err = msg.GetClearingAccount()
+
+  ...
+  return
+}
+</code></pre>
+
+<p>You can also bypass the MessageRouter and type safe classes by inspecting the Message directly. The preferred way of doing this is to use the QuickFIX/Go generated Field types.</p>
+
+<pre><code>
+func (m *MyApplication) FromApp(msg quickfix.Message, sessionID quickfix.SessionID) (err quickfix.MessageRejectError) {
+  var price field.PriceField
+  if err = msg.Body.Get(&field); err!=nil {
+    return
+  }
+
+  ...
+  return
+}
+</code></pre>
+
+<p>Or you can go the least type safe route.</p>
+
+<pre><code>
+func (m *MyApplication) FromApp(msg quickfix.Message, sessionID quickfix.SessionID) (err quickfix.MessageRejectError) {
+  var field quickfix.FIXString
+  if err = msg.Body.GetField(quickfix.Tag(44), &field); err!=nil {
+    return
+  }
+
+  ...
+  return
+}
+</code></pre>
