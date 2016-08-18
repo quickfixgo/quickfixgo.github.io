@@ -1,0 +1,89 @@
+---
+layout: default
+---
+
+<h2>Creating your QuickFIX/Go Application</h2>
+
+<p>Creating a FIX application is as easy as implementing the QuickFIX/Go Application interface.</p>
+
+<pre><code>
+package quickfix
+
+type Application interface {
+  //Notification of a session begin created.
+  OnCreate(sessionID SessionID)
+
+  //Notification of a session successfully logging on.
+  OnLogon(sessionID SessionID)
+
+  //Notification of a session logging off or disconnecting.
+  OnLogout(sessionID SessionID)
+
+  //Notification of admin message being sent to target.
+  ToAdmin(message Message, sessionID SessionID)
+
+  //Notification of app message being sent to target.
+  ToApp(message Message, sessionID SessionID) error
+
+  //Notification of admin message being received from target.
+  FromAdmin(message Message, sessionID SessionID) MessageRejectError
+
+  //Notification of app message being received from target.
+  FromApp(message Message, sessionID SessionID) MessageRejectError
+}
+</code></pre>
+
+<p>By implementing these interface methods in your derived type, you are requesting to be notified of events that occur on the FIX engine. The function that you should be most aware of is <strong>FromApp</strong>.</p>
+
+<p>Here are explanations of what these callback functions provide for you.</p>
+
+<h4>OnCreate</h4>
+<p>OnCreate is called when quickfix creates a new session. A session comes into and remains in existence for the life of the application. Sessions exist whether or not a counter party is connected to it. As soon as a session is created, you can begin sending messages to it. If no one is logged on, the messages will be sent at the time a connection is established with the counterparty.</p>
+
+<h4>OnLogon</h4>
+<p>OnLogon notifies you when a valid logon has been established with a counter party. This is called when a connection has been established and the FIX logon process has completed with both parties exchanging valid logon messages.</p>
+
+<h4>OnLogout</h4>
+<p>OnLogout notifies you when an FIX session is no longer online. This could happen during a normal logout exchange or because of a forced termination or a loss of network connection.</p>
+
+<h4>ToAdmin</h4>
+<p>ToAdmin provides you with a peak at the administrative messages that are being sent from your FIX engine to the counter party. This is normally not useful for an application however it is provided for any logging you may wish to do. Notice that the Message is not const. This allows you to add fields before an administrative message is sent out.</p>
+
+<h4>ToApp</h4>
+<p>ToApp notifies you of application messages that you are being sent to a counterparty. Notice that the Message is not const. This allows you to add fields before an application message before it is sent out.</p>
+
+<h4>FromAdmin</h4>
+<p>FromAdmin notifies you when an administrative message is sent from a counterparty to your FIX engine. This can be useful for doing extra validation on logon messages such as for checking passwords.</p>
+
+<h4>FromApp</h4>
+<p>FromApp is one of the core entry points for your FIX application. Every application level request will come through here. If, for example, your application is a sell-side OMS, this is where you will get your new order requests. If you were a buy side, you would get your execution reports here.</p>
+
+<p>The sample code below shows how you might start up a FIX acceptor which listens on a socket. If you wanted an initiator, you would simply replace NewAcceptor in this code fragment with NewInitiator.</p>
+
+<pre><code>
+package main
+
+import (
+  "flag"
+  "github.com/quickfixgo/quickfix"
+  "os"
+)
+
+func main() {
+  flag.Parse()
+  fileName := flag.Arg(0)
+
+  //FooApplication is your type that implements the Application interface
+  var app FooApplication
+
+  cfg, _ := os.Open(fileName)
+  appSettings, _ := quickfix.ParseSettings(cfg)
+  storeFactory := quickfix.NewMemoryStoreFactory()
+  logFactory, _ := quickfix.NewFileLogFactory(appSettings)
+  acceptor, _ := quickfix.NewAcceptor(app, storeFactory, appSettings, logFactory)
+
+  _ = acceptor.Start()
+  //for condition == true { do something }
+  acceptor.Stop()
+}
+</code></pre>
