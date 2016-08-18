@@ -1,0 +1,330 @@
+---
+layout: default
+---
+
+<h2>QuickFIX/Go Configuration</h2>
+
+
+<h3>QuickFIX/Go Settings</h3>
+
+<table class="table table-bordered table-condensed table-hover table-responsive">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Description</th>
+      <th>Valid Values</th>
+      <th>Default</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr class='info'><th colspan='4' class='text-center'>Session</th></tr>
+    <tr>
+      <th>BeginString</th>
+      <td>Version of FIX this session should use</td>
+      <td>
+        <ul>
+          <li>FIXT.1.1</li>
+          <li>FIX.4.4</li>
+          <li>FIX.4.3</li>
+          <li>FIX.4.2</li>
+          <li>FIX.4.1</li>
+          <li>FIX.4.0</li>
+        </ul>
+      </td>
+      <td/>
+    </tr>
+    <tr>
+      <th>SenderCompID</th>
+      <td>Your ID as associated with this FIX session</td>
+      <td>case-sensitive alpha-numeric string</td>
+      <td/>
+    </tr>
+    <tr>
+      <th>TargetCompID</th>
+      <td>Counter parties ID as associated with this FIX session</td>
+      <td>case-sensitive alpha-numeric string</td>	
+      <td/>
+    </tr>
+    <tr>
+      <th>SessionQualifier</th>
+      <td>Additional qualifier to disambiguate otherwise identical sessions</td>
+      <td>case-sensitive alpha-numeric string</td>	
+      <td/>
+     </tr>
+    <tr>
+      <th>DefaultApplVerID</th>
+      <td>Required only for FIXT 1.1 (and newer). Ignored for earlier transport versions. Specifies the default application version ID for the session. This can either be the ApplVerID enum (see the ApplVerID field) or the BeginString for the default version.</td>
+      <td>
+        <ul>
+          <li>FIX.5.0SP2</li>
+          <li>FIX.5.0SP1</li>
+          <li>FIX.5.0</li>
+          <li>FIX.4.4</li>
+          <li>FIX.4.3</li>
+          <li>FIX.4.2</li>
+          <li>FIX.4.1</li>
+          <li>FIX.4.0</li>
+          <li>9</li>
+          <li>8</li>
+          <li>7</li>
+          <li>6</li>
+          <li>5</li>
+          <li>4</li>
+          <li>3</li>
+          <li>2</li>
+        </ul>
+      </td>
+      <td/>
+    </tr>
+    <tr>
+      <th>TimeZone</th>
+      <td>Time zone for this session; if specified, the session start and end will be converted from this zone to UTC.</td>
+      <td>
+        <ul>
+          <li>IANA Time zone ID (America/New_York, Asia/Tokyo, Europe/London, etc.)</li>
+          <li>Local (The Zone on host)</li>
+        </ul>
+      </td>
+      <td>UTC</td>
+    </tr>
+    <tr>
+      <th>StartTime</th>
+      <td>Time of day that this FIX session becomes activated.</td>
+      <td>Time in the format of HH:MM:SS, time is represented in time zone configured by TimeZone</td>
+      <td/>
+    </tr>
+    <tr>
+      <th>EndTime</th>
+      <td>Time of day that this FIX session becomes deactivated.</td>
+      <td>Time in the format of HH:MM:SS, time is represented in time zone configured by TimeZone</td>
+      <td/>
+    </tr>
+    <tr>
+      <th>StartDay</th>
+      <td>For week long sessions, the starting day of week for the session. Use in combination with StartTime.</td>
+      <td>Full day of week in English, or 3 letter abbreviation (i.e. Monday and Mon are valid)</td>
+      <td/>
+    </tr>
+    <tr>
+      <th>EndDay</th>
+      <td>For week long sessions, the ending day of week for the session. Use in combination with EndTime.</td>
+      <td>Full day of week in English, or 3 letter abbreviation (i.e. Monday and Mon are valid)</td>
+      <td/>
+    </tr>
+    <tr>
+      <th>ResetOnLogon</th>
+      <td>Determines if sequence numbers should be reset when recieving a logon request. Acceptors only.</td>
+      <td>
+        <ul>
+          <li>Y</li>
+          <li>N</li>
+        </ul>
+      </td>
+      <td>N</td>
+    </tr>
+    <tr>
+      <th>ResetOnLogout</th>
+      <td>Determines if sequence numbers should be reset to 1 after a normal logout termination.</td>
+      <td>
+        <ul>
+          <li>Y</li>
+          <li>N</li>
+        </ul>
+      </td>
+      <td>N</td>  
+    </tr>
+    <tr>
+      <th>RefreshOnLogon</th>
+      <td>Determines if session state should be restored from persistence layer when logging on. Useful for creating hot failover sessions.</td>
+      <td>
+        <ul>
+          <li>Y</li>
+          <li>N</li>
+        </ul>
+      </td>
+      <td>N</td>
+    </tr>
+    <tr class='info'><th colspan='4' class='text-center'>Validation</th></tr>
+    <tr>
+      <th>DataDictionary</th>
+      <td>
+        <p>XML definition file for validating incoming FIX messages. If no DataDictionary is supplied, only basic message validation will be done.</p>
+        <p>This setting should only be used with FIX transport versions older than FIXT.1.1. See TransportDataDictionary and AppDataDictionary for FIXT.1.1 settings.</p>
+      </td>
+      <td>
+        <p>Value must be a valid XML data dictionary file. QuickFIX/Go comes with the following defaults in the <code>spec/</code> directory</p>
+        <ul>
+          <li>FIX44.xml</li>
+          <li>FIX43.xml</li>
+          <li>FIX42.xml</li>
+          <li>FIX41.xml</li>
+          <li>FIX40.xml</li>
+         </ul>
+      </td>
+      <td/>
+    </tr>
+    <tr>
+      <th>TransportDataDictionary</th>
+      <td>XML definition file for validating admin (transport) messages. This setting is only valid for FIXT.1.1 (or newer) sessions. See DataDictionary for older transport versions (FIX.4.0 - FIX.4.4) for additional information.</td>
+      <td>
+        <p>Value must be a valid XML data dictionary file, QuickFIX/Go comes with the following defaults in the <code>spec/</code> directory</p>
+        <ul>
+          <li>FIXT1.1.xml</li>
+        </ul>
+      </td>
+      <td/>
+    </tr>
+    <tr>
+      <th>AppDataDictionary</th>
+      <td>
+        <p>XML definition file for validating application messages. This setting is only valid for FIXT.1.1 (or newer) sessions. See DataDictionary for older transport versions (FIX.4.0 - FIX.4.4) for additional information.</p>
+
+        <p>This setting supports the possibility of a custom application data dictionary for each session. This setting would only be used with FIXT 1.1 and new transport protocols. This setting can be used as a prefix to specify multiple application dictionaries for the FIXT transport. For example:</p>
+        <pre>
+DefaultApplVerID=FIX.4.2
+# For default application version ID
+AppDataDictionary=FIX42.xml
+# For nondefault application version ID
+# Use BeginString suffix for app version
+AppDataDictionary.FIX.4.4=FIX44.xml
+        </pre>
+      </td>
+      <td>
+        <p>Value must be a valid XML data dictionary file. QuickFIX/Go comes with the following defaults in the <code>spec/</code> directory</p>
+        <ul>
+          <li>FIX50SP2.xml</li>
+          <li>FIX50SP1.xml</li>
+          <li>FIX50.xml</li>
+          <li>FIX44.xml</li>
+          <li>FIX43.xml</li>
+          <li>FIX42.xml</li>
+          <li>FIX41.xml</li>
+          <li>FIX40.xml</li>
+        </ul>
+      </td>
+      <td/>
+    </tr>
+    <tr>
+      <th>ValidateFieldsOutOfOrder</th>
+      <td>If set to N, fields that are out of order (i.e. body fields in the header, or header fields in the body) will not be rejected. Useful for connecting to systems which do not properly order fields.</td>
+      <td>
+        <ul>
+          <li>Y</li>
+          <li>N</li>
+        </ul>
+      </td>
+      <td>Y</td>
+    </tr>
+    <tr class='info'><th colspan='4' class='text-center'>Initiator</th></tr>
+    <tr>
+      <th>ReconnectInterval</th>
+      <td>Time between reconnection attempts in seconds. Only used for initiators.</td>
+      <td>Value must be positive integer.</td>
+      <td>30</td>
+    </tr>
+    <tr>
+      <th>HeartBtInt</th>
+      <td>Heartbeat interval in seconds. Only used for initiators.</td>
+      <td>Value must be positive integer.</td>
+      <td/>
+    </tr>
+    <tr>
+      <th>SocketConnectPort</th>
+      <td>Socket port for connecting to a session. Only used for initiators.</td>
+      <td>Must be positive integer</td>
+      <td/>
+    </tr>
+    <tr>
+      <th>SocketConnectHost</th>
+      <td>Host to connect to. Only used for initiators.</td>
+      <td>Value must be a valid IPv4 or IPv6 address or a domain name</td>
+      <td/>
+    </tr>
+    <tr>
+      <th>SocketConnectPort&lt;n&gt;</th>
+      <td>Alternate socket ports for connecting to a session for failover, where n is a positive integer. (i.e.) SocketConnectPort1, SocketConnectPort2... must be consecutive and have a matching SocketConnectHost[n].</td> 
+      <td>Value must be a positive integer.</td>
+      <td/>
+    </tr>
+    <tr>
+      <th>SocketConnectHost&lt;n&gt;</th>
+      <td>Alternate socket hosts for connecting to a session for failover, where n is a positive integer. (i.e.) SocketConnectHost1, SocketConnectHost2... must be consecutive and have a matching SocketConnectPort[n].</td>
+      <td>Value must be a valid IPv4 or IPv6 address or a domain name</td>
+      <td/>
+    </tr>
+    <tr class='info'><th colspan='4' class='text-center'>Acceptor</th></tr>
+    <tr>
+      <th>SocketAcceptHost</th>
+      <td>Socket host address for listening on incoming connections, only used for acceptors.</td>
+      <td>Valid interface</td>
+      <td>All available interfaces.</td>
+    </tr>
+    <tr>
+      <th>SocketAcceptPort</th>
+      <td>Socket port for listening to incoming connections, only used for acceptors.</td>
+      <td>Value must be a positive integer, valid open socket port.</td>
+      <td/>
+    </tr>
+    <tr class='info'><th colspan='4' class='text-center'>Secure Communication</th></tr>
+    <tr>
+      <th>SocketPrivateKeyFile</th>
+      <td>Private key to use for secure TLS connections. Must be used with SocketCertificateFile.</td>
+      <td>File Path</td>
+      <td/>
+    </tr>
+    <tr>
+      <th>SocketCertificateFile</th>
+      <td>Certificate to use for secure TLS connections. Must be used with SocketPrivateKeyFile.</td>
+      <td>File Path</td>
+      <td/>
+    </tr>
+    <tr>
+      <th>SocketCAFile</th>
+      <td>Optional root CA to use for secure TLS connections. For acceptors, client certificates will be verified against this CA. For initiators, clients will use the CA to verify the server certificate. If not configurated, initiators will verify the server certificate using the host's root CA set.</td>
+      <td>File Path</td>
+      <td/>
+    </tr>
+    <tr class='info'><th colspan='4' class='text-center'>Storage</th></tr>
+    <tr>
+      <th>FileStorePath</th>
+      <td>Directory to store sequence number and message files. Only used with FileStoreFactory.</td>
+      <td>Valid directory for storing files, must have write access</td>
+      <td/>
+    </tr>
+    <tr>
+      <th>SQLDriver</th>
+      <td>The name of the database driver to use. Only used with SqlStoreFactory.</td>
+      <td>See <a href='https://github.com/golang/go/wiki/SQLDrivers'>https://github.com/golang/go/wiki/SQLDrivers</a> for the list of available drivers</td>
+      <td/>
+    </tr>
+    <tr>
+      <th>SQLDataSourceName</th>
+      <td>The driver-specific data source name of the database to use. Only used with SqlStoreFactory.</td>
+      <td/>
+      <td/>
+    </tr>
+    <tr>
+      <th>SQLConnMaxLifetime</th>
+      <td>
+        <p>SetConnMaxLifetime sets the maximum duration of time that a database connection may be reused (see https://golang.org/pkg/database/sql/#DB.SetConnMaxLifetime). Defaults to zero, which causes connections to be reused forever. Only used with SqlStoreFactory.</p>
+
+        <p>If your database server has a config option to close inactive connections after some duration (e.g. MySQL "wait_timeout"), set SQLConnMaxLifetime to a value less than that duration.</p>
+      </td>
+      <td>
+        <p>Example Values:</p>
+        <pre>
+SQLConnMaxLifetime=14400s # 14400 seconds
+SQLConnMaxLifetime=2h45m  # 2 hours and 45 minutes
+        </pre>
+      </td>
+      <td/>
+    </tr>
+    <tr class='info'><th colspan='4' class='text-center'>Logging</th></tr>
+    <tr>
+      <th>FileLogPath</th>
+      <td>Directory to store logs.</td>
+      <td>Value must be valid directory for storing files, application must have write access.</td>
+      <td/>
+    </tr>
+  </tbody>
+</table>
