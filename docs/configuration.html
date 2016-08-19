@@ -308,29 +308,29 @@ AppDataDictionary.FIX.4.4=FIX44.xml
       <td/>
     </tr>
     <tr>
-      <th>SQLDriver</th>
+      <th>SQLStoreDriver</th>
       <td>The name of the database driver to use. Only used with SqlStoreFactory.</td>
       <td>See <a href='https://github.com/golang/go/wiki/SQLDrivers'>https://github.com/golang/go/wiki/SQLDrivers</a> for the list of available drivers</td>
       <td/>
     </tr>
     <tr>
-      <th>SQLDataSourceName</th>
+      <th>SQLStoreDataSourceName</th>
       <td>The driver-specific data source name of the database to use. Only used with SqlStoreFactory.</td>
       <td/>
       <td/>
     </tr>
     <tr>
-      <th>SQLConnMaxLifetime</th>
+      <th>SQLStoreConnMaxLifetime</th>
       <td>
-        <p>SetConnMaxLifetime sets the maximum duration of time that a database connection may be reused (see https://golang.org/pkg/database/sql/#DB.SetConnMaxLifetime). Defaults to zero, which causes connections to be reused forever. Only used with SqlStoreFactory.</p>
+        <p>SQLStoreConnMaxLifetime sets the maximum duration of time that a database connection may be reused (see https://golang.org/pkg/database/sql/#DB.SetConnMaxLifetime). Defaults to zero, which causes connections to be reused forever. Only used with SqlStoreFactory.</p>
 
-        <p>If your database server has a config option to close inactive connections after some duration (e.g. MySQL "wait_timeout"), set SQLConnMaxLifetime to a value less than that duration.</p>
+        <p>If your database server has a config option to close inactive connections after some duration (e.g. MySQL "wait_timeout"), set SQLStoreConnMaxLifetime to a value less than that duration.</p>
       </td>
       <td>
         <p>Example Values:</p>
         <pre>
-SQLConnMaxLifetime=14400s # 14400 seconds
-SQLConnMaxLifetime=2h45m  # 2 hours and 45 minutes
+SQLStoreConnMaxLifetime=14400s # 14400 seconds
+SQLStoreConnMaxLifetime=2h45m  # 2 hours and 45 minutes
         </pre>
       </td>
       <td/>
