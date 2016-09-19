@@ -160,6 +160,27 @@ layout: default
       </td>
       <td>N</td>
     </tr>
+    <tr>
+      <th>EnableLastMsgSeqNumProcessed</th>
+      <td>Add the last message sequence number processed in the header (optional tag 369).</td>
+      <td>
+        <ul>
+          <li>Y</li>
+          <li>N</li>
+        </ul>
+      </td>
+      <td>N</td>
+    </tr>
+    <tr>
+      <th>ResendRequestChunkSize</th>
+      <td>
+        <p>Setting to limit the size of a resend request in case of missing messages. This is useful when the remote FIX engine does not allow to ask for more than n message for a ResendRequest.</p>
+
+        <p>E.g. if the ResendRequestChunkSize is set to 5 and a gap of 7 messages is detected, a first resend request will be sent for 5 messages. When this gap has been filled, another resend request for 2 messages will be sent. If the ResendRequestChunkSize is set to 0, only one ResendRequest for all the missing messages will be sent.</p>
+      </td>
+      <td>Value must be a positive integer</td>
+      <td>0 (disables splitting)</td>
+    </tr>
     <tr class='info'><th colspan='4' class='text-center'><a name='Validation'></a>Validation</th></tr>
     <tr>
       <th>DataDictionary</th>
@@ -299,6 +320,17 @@ AppDataDictionary.FIX.4.4=FIX44.xml
       <td>Optional root CA to use for secure TLS connections. For acceptors, client certificates will be verified against this CA. For initiators, clients will use the CA to verify the server certificate. If not configurated, initiators will verify the server certificate using the host's root CA set.</td>
       <td>File Path</td>
       <td/>
+    </tr>
+    <tr>
+      <th>SocketInsecureSkipVerify</th>
+      <td>Controls whether a client verifies the server's certificate chain and host name. If InsecureSkipVerify is true, TLS accepts any certificate presented by the server and any host name in that certificate. In this mode, TLS is susceptible to man-in-the-middle attacks. <em>This should be used only for testing.</em></td>
+      <td> 
+        <ul>
+          <li>Y</li>
+          <li>N</li>
+        </ul>
+      </td>
+      <td>N</td>
     </tr>
     <tr class='info'><th colspan='4' class='text-center'><a name='Storage'></a>Storage</th></tr>
     <tr>
