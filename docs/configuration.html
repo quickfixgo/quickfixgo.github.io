@@ -56,8 +56,32 @@ layout: default
       <td/>
     </tr>
     <tr>
+      <th>SenderSubID</th>
+      <td>(Optional) Your subID as associated with this FIX session</td>
+      <td>case-sensitive alpha-numeric string</td>
+      <td/>
+    </tr>
+    <tr>
+      <th>SenderLocationID</th>
+      <td>(Optional) Your locationID as associated with this FIX session</td>
+      <td>case-sensitive alpha-numeric string</td>
+      <td/>
+    </tr>
+    <tr>
       <th>TargetCompID</th>
       <td>Counter parties ID as associated with this FIX session</td>
+      <td>case-sensitive alpha-numeric string</td>	
+      <td/>
+    </tr>
+    <tr>
+      <th>TargetSubID</th>
+      <td>(Optional) Counterparty's subID as associated with this FIX session</td>
+      <td>case-sensitive alpha-numeric string</td>	
+      <td/>
+    </tr>
+    <tr>
+      <th>TargetLocationID</th>
+      <td>(Optional) Counterparty's locationID as associated with this FIX session</td>
       <td>case-sensitive alpha-numeric string</td>	
       <td/>
     </tr>
@@ -66,7 +90,7 @@ layout: default
       <td>Additional qualifier to disambiguate otherwise identical sessions</td>
       <td>case-sensitive alpha-numeric string</td>	
       <td/>
-     </tr>
+    </tr>
     <tr>
       <th>DefaultApplVerID</th>
       <td>Required only for FIXT 1.1 (and newer). Ignored for earlier transport versions. Specifies the default application version ID for the session. This can either be the ApplVerID enum (see the ApplVerID field) or the BeginString for the default version.</td>

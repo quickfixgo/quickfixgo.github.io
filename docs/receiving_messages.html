@@ -29,14 +29,13 @@ func (m *MyApplication) FromApp(msg quickfix.Message, sessionID quickfix.Session
 }
 
 func (m *MyApplication) onNewOrderSingle(msg newordersingle.NewOrderSingle, sessionID quickfix.SessionID) (err quickfix.MessageRejectError) {
-  var clOrdID field.ClOrdIDField
-  if clOrdID, err = msg.GetClOrdID(); err!=nil {
+  clOrdID, err := msg.GetClOrdID()
+  if err != nil {
     return
   }
 
   //compile time error!! field not defined in FIX41
-  var clearingAccount field.ClearingAccountField
-  clearingAccount, err = msg.GetClearingAccount()
+  clearingAccount, err := msg.GetClearingAccount()
 
   ...
   return
