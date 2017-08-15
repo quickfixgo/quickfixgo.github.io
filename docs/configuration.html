@@ -205,6 +205,21 @@ layout: default
       <td>Value must be a positive integer</td>
       <td>0 (disables splitting)</td>
     </tr>
+    <tr>
+      <th>TimeStampPrecision</th>
+      <td>
+        <p>Determines precision for timestamps in (Orig)SendingTime fields that are sent out. Only available for FIX.4.2 and greater, FIX versions earlier than FIX.4.2 will use timestamp resolution in seconds.</p>
+      </td>
+      <td>
+        <ul>
+          <li>SECONDS</li>
+          <li>MILLIS</li>
+          <li>MICROS</li>
+          <li>NANOS</li>
+        </ul>
+      </td>
+      <td>MILLIS</td>
+    </tr>
     <tr class='info'><th colspan='4' class='text-center'><a name='Validation'></a>Validation</th></tr>
     <tr>
       <th>DataDictionary</th>
