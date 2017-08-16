@@ -304,7 +304,7 @@ AppDataDictionary.FIX.4.4=FIX44.xml
     </tr>
     <tr>
       <th>CheckLatency</th>
-      <td>If set to Y, messages must be received from the counterparty within a defined number of seconds. It is useful to turn this off if a system uses localtime for it's timestamps instead of GMT.</td>
+      <td>If set to Y, messages must be received from the counterparty within a defined number of seconds (see MaxLatency). It is useful to turn this off if a system uses localtime for it's timestamps instead of GMT.</td>
       <td>
         <ul>
           <li>Y</li>
@@ -312,6 +312,12 @@ AppDataDictionary.FIX.4.4=FIX44.xml
         </ul>
       </td>
       <td>Y</td>
+    </tr>
+    <tr>
+      <th>MaxLatency</th>
+      <td>If CheckLatency is set to Y, this defines the number of seconds latency allowed for a message to be processed.</td>
+      <td>Value must be positive integer.</td>
+      <td>120</td>
     </tr>
     <tr class='info'><th colspan='4' class='text-center'><a name='Initiator'></a>Initiator</th></tr>
     <tr>
