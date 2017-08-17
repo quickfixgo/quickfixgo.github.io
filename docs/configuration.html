@@ -401,6 +401,17 @@ AppDataDictionary.FIX.4.4=FIX44.xml
     </tr>
     <tr class='info'><th colspan='4' class='text-center'><a name='Storage'></a>Storage</th></tr>
     <tr>
+      <th>PersistMessages</th>
+      <td>If set to N, no messages will be persisted. This will force QuickFIX/Go to always send GapFills instead of resending messages. Use this if you know you never want to resend a message. Useful for market data streams.</td>
+      <td>
+        <ul>
+          <li>Y</li>
+          <li>N</li>
+        </ul>
+      </td>
+      <td>Y</td>
+    </tr>
+    <tr>
       <th>FileStorePath</th>
       <td>Directory to store sequence number and message files. Only used with FileStoreFactory.</td>
       <td>Valid directory for storing files, must have write access</td>
